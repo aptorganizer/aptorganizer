@@ -11,9 +11,59 @@
   </head>
 
   <body>
-    <h1>
-      Hello
+    <h1 id="index_body_title">
+      Apartment Organizer
     </h1>
+
+    <h3 id="index_password_title">
+      Password:
+    </h3>
+
+    <div class="clearfix"/>
+
+    <h2 id="index_lifestyle_dropdown" onclick="index_expand('Lifestyle')" class="hover_transparent">
+      Lifestyle
+      <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
+    </h2>
+    <div class="index_dropdown_box" id="index_lifestyle_box">
+    </div>
+
+    <h2 id="index_furniture_dropdown" onclick="index_expand('Furniture')" class="hover_transparent">
+      Furniture
+      <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
+    </h2>
+    <div class="index_dropdown_box" id="index_furniture_box">
+    </div>
+
+    <h2 id="index_accessories_dropdown" onclick="index_expand('Accessories')" class="hover_transparent">
+      Accessories
+      <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
+    </h2>
+    <div class="index_dropdown_box" id="index_accessories_box">
+    </div>
+
+    <h2 id="index_settings_dropdown" onclick="index_expand('Settings')" class="hover_transparent">
+      Settings
+      <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
+    </h2>
+    <div class="index_dropdown_box" id="index_settings_box">
+    </div>
+
+    <!-- Our scripts -->
+
+    <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+    <script>
+      var config = {
+        apiKey: "AIzaSyDi2l5aTduonT0ZJ1M-KKKGvrPvlnIiRn4",
+        authDomain: "apt-org.firebaseapp.com",
+        databaseURL: "https://apt-org.firebaseio.com",
+        projectId: "apt-org",
+        storageBucket: "",
+        messagingSenderId: "47107554529"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script src = "../JavaScript/index.js"></script>
 
   </body>
 

@@ -1,25 +1,82 @@
-html {
+html
+{
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
-body{
+body
+{
   padding:0;
   margin:0;
   background-color:#abb7c8;
   overflow: hidden;
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  margin: 5% 10% 5% 10%;
+  min-width: 500px;
 }
 
-.clearfix{
+.clearfix
+{
     clear:both;
 }
 
-*:focus {
+*:focus
+{
     outline: none;
 }
 
-* {
+*
+{
   font-family: 'Quicksand', sans-serif;
+}
+
+/************/
+
+.hover_transparent:hover
+{
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+#index_body_title
+{
+  color: white;
+  margin-bottom: 30px;
+  float: left;
+}
+
+#index_password_title
+{
+  color: white;
+  margin-top: 35px;
+  float: right;
+}
+
+h2
+{
+  width: 100%;
+  background-color: #5c7598;
+  height: 30px;
+  color: white;
+  padding: 5px 5px 5px 15px;
+  border-radius: 2px;
+  margin-bottom: 0px;
+}
+
+
+.index_dropdown_arrow
+{
+  width: 50px;
+  height: 50px;
+  float: right;
+  margin: -10px 15px 0px 0px;
+}
+
+.index_dropdown_box
+{
+  width: 100%;
+  height: 200px;
+  background-color: #dadadb;
+  display: none;
+  border-radius: 0px 0px 2px 2px;
 }
