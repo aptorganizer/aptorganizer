@@ -11,13 +11,24 @@
   </head>
 
   <body>
+    <div id="index_join_existing_room_button" class="hover_transparent">
+      <center>
+        Join Existing Room
+      </center>
+    </div>
+
+    <div class="clearfix"/>
+
     <h1 id="index_body_title">
       Apartment Organizer
     </h1>
 
     <h3 id="index_password_title">
-      Password:
+      Unique ID: XXXXXXXX
     </h3>
+
+    <img class="copy_clipboard" id="copy_unique_id" src="../Images/copy.png">
+    </img>
 
     <div class="clearfix"/>
 
@@ -26,6 +37,8 @@
       <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
     </h2>
     <div class="index_dropdown_box" id="index_lifestyle_box">
+      <input id="settings_name" class="box_input" type="text" placeholder="Name"></input>
+      <input id="settings_name" class="box_input" type="text" placeholder="Name"></input>
     </div>
 
     <h2 id="index_furniture_dropdown" onclick="index_expand('Furniture')" class="hover_transparent">
@@ -47,7 +60,13 @@
       <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
     </h2>
     <div class="index_dropdown_box" id="index_settings_box">
+      <input id="settings_name" class="box_input" type="text" placeholder="Name"></input>
+      <img id="settings_name_button" onclick="index_save('settings_name')" src="../Images/check.png" class="settings_update_button"></img>
+      <input id="settings_password" class="box_input" type="text" placeholder="Password"></input>
+      <img id="settings_password_button" onclick="index_save('settings_password')" src="../Images/check.png" class="settings_update_button"></img>
     </div>
+
+    <div class="clearfix"/>
 
     <!-- Our scripts -->
 
