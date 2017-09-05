@@ -12,7 +12,11 @@
 
   <body>
     <center>
-      <div style="margin-top: 200px;" onclick="create_new_room()" class="hover_transparent title_button">
+      <input id="name_room" class="title_input" maxlength="8" type="text" placeholder="Name" style="display: block; margin-top: 150px;"></input>
+    </center>
+
+    <center>
+      <div onclick="create_new_room()" class="hover_transparent title_button">
         Create New Room
       </div>
     </center>
@@ -22,6 +26,9 @@
     <center>
       <input id="join_existing_room" class="title_input" maxlength="8" type="text" placeholder="Room ID"></input>
     </center>
+
+    <div class="clearfix"/>
+
     <center>
       <div id="join_existing_room_button" onclick="join_existing_room()" class="hover_transparent title_button">
         Join Existing Room
@@ -43,8 +50,8 @@
       firebase.initializeApp(config);
       var database = firebase.database();
     </script>
-    <script src = "../JavaScript/title.js"></script>
     <script src = "../JavaScript/index.js"></script>
+    <script src = "../JavaScript/title.js"></script>
 
   </body>
 

@@ -10,12 +10,13 @@
     </script>
   </head>
 
-  <body onload="creating_room_2()">
-    <div id="index_join_existing_room_button" class="hover_transparent">
+  <body>
+    <div onclick="show_input()" id="index_join_existing_room_button" class="hover_transparent">
       <center>
         Join Existing Room
       </center>
     </div>
+    <input id="index_join_existing_room" class="title_input" maxlength="8" type="text" placeholder="Room ID"></input>
 
     <div class="clearfix"/>
 
@@ -27,7 +28,7 @@
     </img>
 
     <h3 id="index_password_title">
-      Unique ID: XXXXXXXX
+      Room ID: XXXXXXXX
     </h3>
 
     <div class="clearfix"/>
@@ -83,8 +84,8 @@
       firebase.initializeApp(config);
       var database = firebase.database();
     </script>
-    <script src = "../JavaScript/title.js"></script>
     <script src = "../JavaScript/index.js"></script>
+    <script src = "../JavaScript/title.js"></script>
   </body>
 
 </html>
