@@ -1,0 +1,51 @@
+<!DOCTYPE html -->
+
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="../CSS/title.css">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300" rel="stylesheet">
+    </link>
+    </script>
+  </head>
+
+  <body>
+    <center>
+      <div style="margin-top: 200px;" onclick="create_new_room()" class="hover_transparent title_button">
+        Create New Room
+      </div>
+    </center>
+
+    <div class="clearfix"/>
+
+    <center>
+      <input id="join_existing_room" class="title_input" maxlength="8" type="text" placeholder="Room ID"></input>
+    </center>
+    <center>
+      <div id="join_existing_room_button" onclick="join_existing_room()" class="hover_transparent title_button">
+        Join Existing Room
+      </div>
+    </center>
+
+    <!-- Our scripts -->
+
+    <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+    <script>
+      var config = {
+        apiKey: "AIzaSyDi2l5aTduonT0ZJ1M-KKKGvrPvlnIiRn4",
+        authDomain: "apt-org.firebaseapp.com",
+        databaseURL: "https://apt-org.firebaseio.com",
+        projectId: "apt-org",
+        storageBucket: "",
+        messagingSenderId: "47107554529"
+      };
+      firebase.initializeApp(config);
+      var database = firebase.database();
+    </script>
+    <script src = "../JavaScript/title.js"></script>
+    <script src = "../JavaScript/index.js"></script>
+
+  </body>
+
+</html>

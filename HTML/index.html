@@ -10,7 +10,7 @@
     </script>
   </head>
 
-  <body>
+  <body onload="creating_room_2()">
     <div id="index_join_existing_room_button" class="hover_transparent">
       <center>
         Join Existing Room
@@ -23,12 +23,12 @@
       Apartment Organizer
     </h1>
 
+    <img alt="Copy to Clipboard" title="Copy to Clipboard" class="copy_clipboard hover_transparent" id="copy_unique_id" src="../Images/copy.png">
+    </img>
+
     <h3 id="index_password_title">
       Unique ID: XXXXXXXX
     </h3>
-
-    <img class="copy_clipboard" id="copy_unique_id" src="../Images/copy.png">
-    </img>
 
     <div class="clearfix"/>
 
@@ -81,9 +81,10 @@
         messagingSenderId: "47107554529"
       };
       firebase.initializeApp(config);
+      var database = firebase.database();
     </script>
+    <script src = "../JavaScript/title.js"></script>
     <script src = "../JavaScript/index.js"></script>
-
   </body>
 
 </html>
