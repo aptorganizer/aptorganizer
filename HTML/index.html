@@ -60,16 +60,41 @@
       <img onclick="add('furniture')" src="../Images/plus.png" class="slide_element slide_element_furniture plus_button hover_transparent"></img>
     </div>
 
+    <h2 id="index_bedroom_dropdown" onclick="index_expand('Bedroom')" class="hover_transparent">
+      Bedroom
+      <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
+    </h2>
+    <div class="index_dropdown_box slide_element_bedroom" id="index_bedroom_box">
+      <img id="bedroom_top_minus" onclick="clear_top('bedroom')" src="../Images/minus.png" class="slide_element slide_element_bedroom minus_button hover_transparent"></img>
+      <input id="bedroom_input" class="box_input slide_element slide_element_bedroom" type="text" placeholder="e.g. Mattress"></input>
+      <img title="Save" onclick="save_top('bedroom')" src="../Images/check.png" id="bedroom_top_check" class="input_checkbox slide_element slide_element_bedroom hover_transparent"></img>
+    <!--    <img src="../Images/select.png" class="slide_element slide_element_bedroom select_button hover_transparent input_checkbox_select"></img>-->
+      <img onclick="add('bedroom')" src="../Images/plus.png" class="slide_element slide_element_bedroom plus_button hover_transparent"></img>
+    </div>
+
     <h2 id="index_accessories_dropdown" onclick="index_expand('Accessories')" class="hover_transparent">
       Accessories
       <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
     </h2>
     <div class="index_dropdown_box slide_element_accessories" id="index_accessories_box">
       <img id="accessories_top_minus" onclick="clear_top('accessories')" src="../Images/minus.png" class="slide_element slide_element_accessories minus_button hover_transparent"></img>
-      <input id="accessories_input" class="box_input slide_element slide_element_accessories" type="text" placeholder="e.g. Cards against Humanity!"></input>
+      <input id="accessories_input" class="box_input slide_element slide_element_accessories" type="text" placeholder="e.g. Trash Can"></input>
       <img title="Save" onclick="save_top('accessories')" src="../Images/check.png" id="accessories_top_check" class="input_checkbox slide_element slide_element_accessories hover_transparent"></img>
   <!--    <img src="../Images/select.png" class="slide_element slide_element_accessories select_button hover_transparent input_checkbox_select"></img>-->
       <img onclick="add('accessories')" src="../Images/plus.png" class="slide_element slide_element_accessories plus_button hover_transparent"></img>
+
+    </div>
+
+    <h2 id="index_miscellaneous_dropdown" onclick="index_expand('Miscellaneous')" class="hover_transparent">
+      Miscellaneous
+      <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
+    </h2>
+    <div class="index_dropdown_box slide_element_miscellaneous" id="index_miscellaneous_box">
+      <img id="miscellaneous_top_minus" onclick="clear_top('miscellaneous')" src="../Images/minus.png" class="slide_element slide_element_miscellaneous minus_button hover_transparent"></img>
+      <input id="miscellaneous_input" class="box_input slide_element slide_element_miscellaneous" type="text" placeholder="e.g. Cards against Humanity!"></input>
+      <img title="Save" onclick="save_top('miscellaneous')" src="../Images/check.png" id="miscellaneous_top_check" class="input_checkbox slide_element slide_element_miscellaneous hover_transparent"></img>
+    <!--    <img src="../Images/select.png" class="slide_element slide_element_miscellaneous select_button hover_transparent input_checkbox_select"></img>-->
+      <img onclick="add('miscellaneous')" src="../Images/plus.png" class="slide_element slide_element_miscellaneous plus_button hover_transparent"></img>
 
     </div>
 
