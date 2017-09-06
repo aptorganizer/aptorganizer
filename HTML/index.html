@@ -41,9 +41,9 @@
       <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
     </h2>
     <div class="index_dropdown_box slide_element_lifestyle" id="index_lifestyle_box">
-      <img onclick="clear_top('lifestyle')" src="../Images/minus.png" class="slide_element slide_element_lifestyle minus_button hover_transparent"></img>
+      <img id="lifestyle_top_minus" onclick="clear_top('lifestyle')" src="../Images/minus.png" class="slide_element slide_element_lifestyle minus_button hover_transparent"></img>
       <input id="lifestyle_input" class="box_input slide_element slide_element_lifestyle" type="text" placeholder="e.g. Microwave"></input>
-      <img title="Save" src="../Images/check.png" id="lifestyle_box" class="input_checkbox slide_element slide_element_lifestyle hover_transparent"></img>
+      <img title="Save" onclick="save_top('lifestyle')" src="../Images/check.png" id="lifestyle_top_check" class="input_checkbox slide_element slide_element_lifestyle hover_transparent"></img>
     <!--  <img src="../Images/select.png" class="slide_element slide_element_lifestyle select_button hover_transparent input_checkbox_select"></img>-->
       <img onclick="add('lifestyle')" src="../Images/plus.png" class="slide_element slide_element_lifestyle plus_button hover_transparent"></img>
     </div>
@@ -53,9 +53,9 @@
       <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
     </h2>
     <div class="index_dropdown_box slide_element_furniture" id="index_furniture_box">
-      <img onclick="clear_top('furniture')" src="../Images/minus.png" class="slide_element slide_element_furniture minus_button hover_transparent"></img>
+      <img id="furniture_top_minus" onclick="clear_top('furniture')" src="../Images/minus.png" class="slide_element slide_element_furniture minus_button hover_transparent"></img>
       <input id="furniture_input" class="box_input slide_element slide_element_furniture" type="text" placeholder="e.g. Couch"></input>
-      <img src="../Images/check.png" id="furniture_box" class="input_checkbox slide_element slide_element_furniture hover_transparent"></img>
+      <img title="Save" onclick="save_top('furniture')" src="../Images/check.png" id="furniture_top_check" class="input_checkbox slide_element slide_element_furniture hover_transparent"></img>
   <!--    <img src="../Images/select.png" class="slide_element slide_element_furniture select_button hover_transparent input_checkbox_select"></img>-->
       <img onclick="add('furniture')" src="../Images/plus.png" class="slide_element slide_element_furniture plus_button hover_transparent"></img>
     </div>
@@ -65,9 +65,9 @@
       <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
     </h2>
     <div class="index_dropdown_box slide_element_accessories" id="index_accessories_box">
-      <img onclick="clear_top('accessories')" src="../Images/minus.png" class="slide_element slide_element_accessories minus_button hover_transparent"></img>
+      <img id="accessories_top_minus" onclick="clear_top('accessories')" src="../Images/minus.png" class="slide_element slide_element_accessories minus_button hover_transparent"></img>
       <input id="accessories_input" class="box_input slide_element slide_element_accessories" type="text" placeholder="e.g. Cards against Humanity!"></input>
-      <img src="../Images/check.png" id="accessories_box" class="input_checkbox slide_element slide_element_accessories hover_transparent"></img>
+      <img title="Save" onclick="save_top('accessories')" src="../Images/check.png" id="accessories_top_check" class="input_checkbox slide_element slide_element_accessories hover_transparent"></img>
   <!--    <img src="../Images/select.png" class="slide_element slide_element_accessories select_button hover_transparent input_checkbox_select"></img>-->
       <img onclick="add('accessories')" src="../Images/plus.png" class="slide_element slide_element_accessories plus_button hover_transparent"></img>
 
@@ -89,10 +89,20 @@
 
     <div class="clearfix"/>
 
+
     <br></br>
+
+    <img src="../Images/instructions_check.png" class="instructions_img"></img>
+    <div class="instructions_text">Click to Save Item in Checklist</div>
+    <img src="../Images/instructions_save.png" class="instructions_img"></img>
+    <div class="instructions_text">Click to show you're bringing this Item</div>
+
     <a href="mailto:ejlin1996@gmail.com">
       <img src="../Images/mail.png" class="footer_img hover_transparent" title="Contact Me"></img>
     </a>
+    <a target="_blank" href ="https://www.google.com/chrome/browser/desktop/index.html">
+      <img src="../Images/chrome.png" class="footer_img_chrome hover_transparent" title="Google Chrome Download"></img>
+    </img>
 
     <!-- Our scripts -->
 
