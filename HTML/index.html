@@ -38,15 +38,19 @@
       <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
     </h2>
     <div class="index_dropdown_box slide_element_lifestyle" id="index_lifestyle_box">
-      <input id="settings_name" class="box_input slide_element slide_element_lifestyle" type="text" placeholder="Name"></input>
-      <input id="settings_name" class="box_input slide_element slide_element_lifestyle" type="text" placeholder="Name"></input>
+      <img onclick="add('lifestyle')" src="../Images/plus.png" class="slide_element slide_element_lifestyle plus_button hover_transparent"></img>
+      <input class="box_input slide_element slide_element_lifestyle" type="text" placeholder=""></input>
+      <div id="lifestyle_box" class="input_checkbox slide_element slide_element_lifestyle hover_transparent"></div>
     </div>
 
     <h2 id="index_furniture_dropdown" onclick="index_expand('Furniture')" class="hover_transparent">
       Furniture
       <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
     </h2>
-    <div class="index_dropdown_box" id="index_furniture_box">
+    <div class="index_dropdown_box slide_element_furniture" id="index_furniture_box">
+      <img onclick="add('furniture')" src="../Images/plus.png" class="slide_element slide_element_furniture plus_button hover_transparent"></img>
+      <input class="box_input slide_element slide_element_furniture" type="text" placeholder=""></input>
+      <div id="furniture_box" class="input_checkbox slide_element slide_element_furniture hover_transparent"></div>
     </div>
 
     <h2 id="index_accessories_dropdown" onclick="index_expand('Accessories')" class="hover_transparent">
@@ -55,6 +59,8 @@
     </h2>
     <div class="index_dropdown_box" id="index_accessories_box">
     </div>
+
+    <!--
 
     <h2 id="index_settings_dropdown" onclick="index_expand('Settings')" class="hover_transparent">
       Settings
@@ -66,6 +72,7 @@
       <input id="settings_password" class="box_input" type="text" placeholder="Password"></input>
       <img id="settings_password_button" onclick="index_save('settings_password')" src="../Images/check.png" class="settings_update_button"></img>
     </div>
+  -->
 
     <div class="clearfix"/>
 
