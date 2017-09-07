@@ -261,6 +261,9 @@ function add(type)
       new_div.innerHTML = new_input.value;
       box.removeChild(new_input);
       box.insertBefore(new_div, new_check);
+
+      save_firebase(type, new_div, new_div.innerHTML);
+
       new_check.src = "../Images/select.png";
       to_remove = new_div;
 
@@ -293,7 +296,7 @@ function check_helper(new_check, new_div)
     new_div.style.fontWeight = "normal";
     new_check.onclick = function()
     {
-      check_helper(new_check, new_div);
+      check_helper(new_check, new_div, new_div.innerHTML);
     }
   }
 }
@@ -443,6 +446,7 @@ function save_top(type, index_input, index_check)
     new_div.className += " slide_element";
     new_div.style.display = "block";
     new_div.innerHTML = input.value;
+
     switch(type)
     {
       case 'lifestyle':
@@ -465,6 +469,9 @@ function save_top(type, index_input, index_check)
     }
     box.removeChild(input);
     box.insertBefore(new_div, check);
+
+    save_firebase(type, new_div);
+
     check.src = "../Images/select.png";
     check.onclick = function()
     {
@@ -514,14 +521,48 @@ function save_top(type, index_input, index_check)
   }
 }
 
+function save_firebase(type, element, value)
+{
+  var arr;
+  var to_change_array;
 
+  switch(type)
+  {
+    case 'lifestyle':
+      arr = 'lifestyle_value';
+      to_change_array = lifestyle_value;
+      break;
+    case 'furniture':
+      arr = 'furniture_value';
+      to_change_array = furniture_value;
+      break;
+    case 'bedroom':
+      arr = 'bedroom_value';
+      to_change_array = bedroom_value;
+      break;
+    case 'accessories':
+      arr = 'accessories_value';
+      to_change_array = accessories_value;
+      break;
+    case 'miscellaneous':
+      arr = 'miscellaneous_value';
+      to_change_array = miscellaneous_value;
+      break;
+    default:
+      break;
+  }
+  var counter = 0;
 
+  while (box.firstChild != element)
+  {
+    counter++;
+  }
 
-
-
-
-
-
+  var updates = {};
+  to_change_array[counter] = value;
+  updates['/rooms/' + current_id + '/' + arr] = to_change_array;
+  database.ref().update(updates);
+}
 /////
 
 
@@ -535,56 +576,16 @@ function add_from_load(type, value, bool, num, box)
   new_minus.className += " hover_transparent";
 
   var new_div;
-  var is_input = false;
 
-  if (value != "" && bool != "")
-  {
-    new_div = document.createElement("DIV");
-    new_div.className += " box_div";
-    new_div.className += " slide_element";
-    new_div.innerHTML = value;
-  }
-  else
-  {
-    is_input = true;
-    new_div = document.createElement("INPUT");
-    new_div.className += " box_input";
-    new_div.className += " slide_element";
-    switch(type)
-    {
-      case 'lifestyle':
-        new_div.placeholder = "e.g. Microwave";
-        break;
-      case 'furniture':
-        new_div.placeholder = "e.g. Couch";
-        break;
-      case 'bedroom':
-        new_div.placeholder = "e.g. Mattress";
-        break;
-      case 'accessories':
-        new_div.placeholder = "e.g. Trash Can";
-        break;
-      case 'miscellaneous':
-        new_div.placeholder = "e.g. Cards against Humanity!";
-        break;
-      default:
-        break;
-    }
-  }
+  new_div = document.createElement("DIV");
+  new_div.className += " box_div";
+  new_div.className += " slide_element";
+  new_div.innerHTML = value;
 
   var new_check = document.createElement("IMG");
   new_check.className += " input_checkbox";
   new_check.className += " slide_element";
   new_check.className += " hover_transparent";
-
-  if (num == 0)
-  {
-    var new_plus = document.createElement("IMG");
-    new_plus.src = "../Images/plus.png"
-    new_plus.className += " slide_element";
-    new_plus.className += " plus_button";
-    new_plus.className += " hover_transparent";
-  }
 
   var str;
 
@@ -622,19 +623,14 @@ function add_from_load(type, value, bool, num, box)
   new_div.className += str;
   new_check.className += str;
 
-  if (bool == "true" && !is_input)
+  if (bool == "true")
   {
     new_check.src = "../Images/selected.png";
     new_div.style.backgroundColor = "#5c7598";
   }
-  else if (bool == "false" && !is_input)
-  {
-    new_check.src = "../Images/select.png";
-    new_div.style.backgroundColor = "#abb7c8";
-  }
   else
   {
-    new_check.src = "../Images/check.png";
+    new_check.src = "../Images/select.png";
     new_div.style.backgroundColor = "#abb7c8";
   }
 
@@ -642,33 +638,13 @@ function add_from_load(type, value, bool, num, box)
   box.appendChild(new_div);
   box.appendChild(new_check);
 
-  if (num == 0)
-  {
-    new_plus.className += str;
-    new_plus.onclick = function()
-    {
-      add(type);
-    }
-    box.appendChild(new_plus);
-  }
-
   var to_remove = new_div;
 
-  if (is_input)
-  {
-    box.style.height = "110px";
-    new_check.onclick = function()
-    {
-      save_top(type, new_div, new_check);
-    }
-  }
-  else
-  {
+
     new_check.onclick = function()
     {
       check_helper(new_check, new_div);
     }
-  }
 
 
   new_minus.onclick = function()
@@ -678,8 +654,6 @@ function add_from_load(type, value, bool, num, box)
 }
 
 ////
-
-
 
 function populate_boxes(values, bools, type)
 {
@@ -705,10 +679,21 @@ function populate_boxes(values, bools, type)
     default:
       break;
   }
-  while (box.firstChild) {
-    box.removeChild(box.firstChild);
+  if (values[0] == "" || bools[0] == "")
+  {
+    while(box.firstChild.firstChild)
+    {
+      box.removeChild(box.firstChild());
+    }
+    return;
   }
-  box.style.height = "31px";
+  else
+  {
+    while (box.firstChild) {
+      box.removeChild(box.firstChild);
+    }
+    box.style.height = "31px";
+  }
   for (var i = 0; i < values.length; i++)
   {
     add_from_load(type, values[i], bools[i], i, box);
@@ -718,9 +703,10 @@ function populate_boxes(values, bools, type)
 window.onload = function ()
 {
   var ind = document.getElementById('index_password_title');
-  var room_id = window.location.hash.substring(1, 9)
-  name = window.location.hash.substring(10)
+  var room_id = window.location.hash.substring(1, 9);
+  name = window.location.hash.substring(10);
   ind.innerHTML = "Room ID: " + room_id;
+  current_id = room_id;
 
   database.ref('rooms/' + room_id + '/lifestyle_value').on('value', function(snapshot)
   {
