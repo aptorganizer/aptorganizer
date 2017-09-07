@@ -12,7 +12,7 @@ body
   overflow: hidden;
   width: 80%;
   margin: 5% 10% 5% 10%;
-  min-width: 700px;
+  min-width: 1200px;
 }
 
 .clearfix
@@ -61,6 +61,7 @@ h2
   padding: 5px 5px 5px 15px;
   border-radius: 2px;
   margin-bottom: 0px;
+  z-index: 2;
 }
 
 .index_dropdown_arrow
@@ -74,7 +75,7 @@ h2
 .index_dropdown_box
 {
   width: 100%;
-  height: 190px;
+  height: 110px;
   background-color: #dadadb;
   display: none;
   border-radius: 0px 0px 2px 2px;
@@ -82,7 +83,7 @@ h2
 
 .box_input
 {
-  width: 80%;
+  width: 78%;
   height: 50px;
   border: none;
   border-radius: 2px 0px 0px 2px;
@@ -92,7 +93,6 @@ h2
   padding: 12px 20px 12px 40px;
   z-index: 3;
   margin-top: 2.5%;
-  margin-left: 7.5%;
   float: left;
 }
 
@@ -114,6 +114,7 @@ h2
 
 #index_join_existing_room_button
 {
+  min-width: 200px;
   background-color:#5c7598;
   width: 15%;
   color: white;
@@ -133,5 +134,134 @@ h2
 
 #copy_unique_id
 {
+  margin-top: 35px;
+  margin-left: 15px;
   float: right;
+}
+
+.title_input
+{
+  min-width: 200px;
+  width: 15%;
+  height: 40px;
+  border: none;
+  border-radius: 0px 0px 2px 2px;
+  font-size: 18px;
+  background-color:#dadadb;
+  color: #5c7598;
+  padding: 10px;
+  z-index: 3;
+  margin-top: 25px;
+  display: none;
+  float: right;
+}
+
+.title_input::-webkit-input-placeholder
+{
+    color: #5c7598;
+}
+
+.footer_img
+{
+  width: 40px;
+  height: 35px;
+  float: right;
+  margin-left: 20px;
+}
+
+.footer_img_chrome
+{
+  width: 35px;
+  height: 35px;
+  float: right;
+}
+
+.slide_element
+{
+  display: none;
+  z-index: -1;
+}
+
+.plus_button
+{
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  float: left;
+  margin-left: 25px;
+  margin-top: calc(2.5%);
+  padding-bottom: 5px;
+}
+
+.minus_button
+{
+  width: 40px;
+  height: 40px;
+  float: left;
+  margin-left: 3.5%;
+  margin-right: 2%;
+  clear: left;
+  margin-top: calc(2.5% + 5px);
+}
+
+.select_button
+{
+  width: 40px;
+  height: 40px;
+  float: left;
+  margin-left: 25px;
+  margin-top: calc(2.5% + 5px);
+}
+
+.input_checkbox
+{
+  height: 30px;
+  width: 2.5%;
+  padding: 10px;
+  background-color: #5c7598;
+  float: left;
+  margin-top: 2.5%;
+  border-radius: 0px 2px 2px 0px;
+}
+
+.input_checkbox_select
+{
+  height: 30px;
+  width: 2.5%;
+  padding: 10px;
+  background-color: #abb7c8;
+  float: left;
+  margin-top: 2.5%;
+  border-radius: 2px;
+}
+
+.box_div
+{
+  width: calc(78% - 60px);
+  height: calc(50px - 24px);
+  border: none;
+  border-radius: 2px 0px 0px 2px;
+  font-size: 18px;
+  color: white;
+  background-color:#abb7c8;
+  padding: 14px 20px 10px 40px;
+  z-index: 3;
+  margin-top: 2.5%;
+  float: left;
+}
+
+.instructions_text
+{
+    float: left;
+    color: white;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.instructions_img
+{
+  width: 40px;
+  height: 40px;
+  float: left;
+  margin-left: 50px;
 }

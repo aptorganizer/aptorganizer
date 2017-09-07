@@ -1,0 +1,82 @@
+html
+{
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+body
+{
+  padding:0;
+  background-color:#abb7c8;
+  overflow: hidden;
+  width: 80%;
+  margin: 5% 10% 5% 10%;
+  min-width: 700px;
+}
+
+.clearfix
+{
+    clear:both;
+}
+
+*:focus
+{
+    outline: none;
+}
+
+*
+{
+  font-family: 'Quicksand', sans-serif;
+}
+
+/************/
+
+.hover_transparent:hover
+{
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+
+.title_button
+{
+  min-width: 200px;
+  background-color:#5c7598;
+  width: 25%;
+  color: white;
+  font-size: 22px;
+  height: 30px;
+  margin-top: 25px;
+  padding: 10px;
+  border-radius: 2px;
+}
+
+.title_input
+{
+  min-width: 200px;
+  width: 26.5%;
+  height: 50px;
+  border: none;
+  border-radius: 2px;
+  font-size: 18px;
+  background-color:#dadadb;
+  color: #5c7598;
+  padding: 10px;
+  z-index: 3;
+  margin-top: 25px;
+  display: none;
+}
+
+::-webkit-input-placeholder {
+    color: #5c7598;
+}
+
+.instruction_img
+{
+  width: 650px;
+  height: 275px;
+  border: solid #5c7598 2px;
+  float: left;
+  border-radius: 5px;
+  margin-left: 40px;
+}
