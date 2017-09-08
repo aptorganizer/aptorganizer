@@ -276,7 +276,7 @@ function add(type, num)
       save_firebase(type, firebase_value, "false", "", len);
       new_check.onclick = function()
       {
-        check_helper(new_check, new_div, type);
+        check_helper(new_check, new_div, len, type);
         save_firebase(type, firebase_value, "true", name, len);
       }
     }
@@ -945,7 +945,7 @@ function populate_boxes(arr, type)
     default:
       break;
   }
-  if (values.length == 1)
+  if (values.length == 1 && values[0] == "")
   {
     header.className += " hover_transparent";
     header.onclick = function()
