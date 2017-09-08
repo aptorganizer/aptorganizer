@@ -232,9 +232,9 @@ function add(type, num)
   box.appendChild(new_minus);
   box.appendChild(new_input);
   box.appendChild(new_check);
-  //box.appendChild(new_select);
 
   var to_remove = new_input;
+  var item_id = "" + Math.random().toString(36).slice(-8);
 
   new_check.onclick = function()
   {
@@ -273,18 +273,18 @@ function add(type, num)
         default:
           break;
       }
-      save_firebase(type, firebase_value, "false", "", len);
+      save_firebase(type, firebase_value, "false", "", item_id);
       new_check.onclick = function()
       {
-        check_helper(new_check, new_div, len, type);
-        save_firebase(type, firebase_value, "true", name, len);
+        check_helper(new_check, new_div, item_id, type);
+        save_firebase(type, firebase_value, "true", name, item_id);
       }
     }
   }
   new_minus.onclick = function()
   {
     remove_element(new_minus, to_remove, new_check, box, type);
-    remove_firebase(type);
+    remove_firebase(type, item_id);
   }
 }
 
@@ -395,14 +395,6 @@ function remove_firebase(type, num)
 {
   var updates = {};
   var position = 0;
-  if (!num)
-  {
-    position = values.length;
-  }
-  else
-  {
-      position = num;
-  }
 
   switch(type)
   {
@@ -411,48 +403,89 @@ function remove_firebase(type, num)
       var bools = lifestyle[1];
       var names = lifestyle[2];
       var ids = lifestyle[3];
+      var item_ids = lifestyle[4];
       break;
     case 'furniture':
       var values = furniture[0];
       var bools = furniture[1];
       var names = furniture[2];
       var ids = furniture[3];
+      var item_ids = furniture[4];
       break;
     case 'bedroom':
       var values = bedroom[0];
       var bools = bedroom[1];
       var names = bedroom[2];
       var ids = bedroom[3];
+      var item_ids = bedroom[4];
       break;
     case 'accessories':
       var values = accessories[0];
       var bools = accessories[1];
       var names = accessories[2];
       var ids = accessories[3];
+      var item_ids = accessories[4];
       break;
     case 'miscellaneous':
       var values = miscellaneous[0];
       var bools = miscellaneous[1];
       var names = miscellaneous[2];
       var ids = miscellaneous[3];
+      var item_ids = miscellaneous[4];
       break;
     default:
       break;
   }
-  if (num)
+  for (var i = 0; i < item_ids.length; i++)
   {
-    for (var i = num; i < values.length - 1; i++)
+    if (item_ids[i] == num)
     {
-      values[i] = values[i + 1];
-      bools[i] = bools[i + 1];
-      names[i] = names[i + 1];
-      ids[i] = ids[i + 1];
+      position = i;
     }
+  }
+  if (position == 0)
+  {
+    values[position] = "";
+    bools[position] = "";
+    names[position] = "";
+    ids[position] = "";
+    item_ids[position] = "";
+    switch(type)
+    {
+      case 'lifestyle':
+        updates['/rooms/' + current_id + '/lifestyle/'] = lifestyle;
+        break;
+      case 'furniture':
+        updates['/rooms/' + current_id + '/furniture/'] = furniture;
+        break;
+      case 'bedroom':
+        updates['/rooms/' + current_id + '/bedroom/'] = bedroom;
+        break;
+      case 'accessories':
+        updates['/rooms/' + current_id + '/accessories/'] = accessories;
+        break;
+      case 'miscellaneous':
+        updates['/rooms/' + current_id + '/miscellaneous/'] = miscellaneous;
+        break;
+      default:
+        break;
+    }
+
+    return database.ref().update(updates);
+  }
+  for (var i = position; i < values.length - 1; i++)
+  {
+    values[i] = values[i + 1];
+    bools[i] = bools[i + 1];
+    names[i] = names[i + 1];
+    ids[i] = ids[i + 1];
+    item_ids[i] = item_ids[i + 1];
   }
   values.pop();
   bools.pop();
   names.pop();
   ids.pop();
+  item_ids.pop();
 
   switch(type)
   {
@@ -478,90 +511,137 @@ function remove_firebase(type, num)
   return database.ref().update(updates);
 }
 
-function save_firebase(type, value, bool, name, num)
+function save_firebase(type, value, bool, name, item_id)
 {
   var updates = {};
-  var position = 0;
-  if (!num && num != 0)
-  {
-    switch (type)
-    {
-      case 'lifestyle':
-        position = lifestyle[0].length;
-        break;
-      case 'furniture':
-        position = furniture[0].length;
-      case 'bedroom':
-        position = bedroom[0].length;
-      case 'accessories':
-        position = accessories[0].length;
-      case 'miscellaneous':
-        position = miscellaneous[0].length;
-      default:
-        break;
-    }
-  }
-  else
-  {
-    console.log("here");
-      position = num;
-  }
 
   switch(type)
   {
     case 'lifestyle':
+      var position = 0;
+      if (lifestyle[0][0] != "")
+      {
+        var position = lifestyle[0].length;
+      }
       var values = lifestyle[0];
       var bools = lifestyle[1];
       var names = lifestyle[2];
       var ids = lifestyle[3];
+      var item_ids = lifestyle[4];
+      for (var i = 0; i < item_ids.length; i++)
+      {
+        if (item_ids[i] == item_id)
+        {
+          position = i;
+        }
+      }
       values[position] = value;
       bools[position] = bool;
       names[position] = name;
       ids[position] = unique_id;
+      item_ids[position] = item_id;
       updates['/rooms/' + current_id + '/lifestyle/'] = lifestyle;
       break;
     case 'furniture':
+      var position = 0;
+      if (furniture[0][0] != "")
+      {
+        var position = furniture[0].length;
+      }
       var values = furniture[0];
       var bools = furniture[1];
       var names = furniture[2];
       var ids = furniture[3];
+      var item_ids = furniture[4];
+      for (var i = 0; i < item_ids.length; i++)
+      {
+        if (item_ids[i] == item_id)
+        {
+          position = i;
+        }
+      }
       values[position] = value;
       bools[position] = bool;
       names[position] = name;
       ids[position] = unique_id;
+      item_ids[position] = item_id;
       updates['/rooms/' + current_id + '/furniture/'] = furniture;
       break;
     case 'bedroom':
+      var position = 0;
+      if (bedroom[0][0] != "")
+      {
+        var position = bedroom[0].length;
+      }
       var values = bedroom[0];
       var bools = bedroom[1];
       var names = bedroom[2];
       var ids = bedroom[3];
+      var item_ids = bedroom[4];
+      for (var i = 0; i < item_ids.length; i++)
+      {
+        if (item_ids[i] == item_id)
+        {
+          position = i;
+        }
+      }
       values[position] = value;
       bools[position] = bool;
       names[position] = name;
       ids[position] = unique_id;
+      item_ids[position] = item_id;
       updates['/rooms/' + current_id + '/bedroom/'] = bedroom;
       break;
     case 'accessories':
+      var position = 0;
+      if (accessories[0][0] != "")
+      {
+        var position = accessories[0].length;
+      }
+      var position = accessories[0].length;
       var values = accessories[0];
       var bools = accessories[1];
       var names = accessories[2];
       var ids = accessories[3];
+      var item_ids = accessories[4];
+      for (var i = 0; i < item_ids.length; i++)
+      {
+        if (item_ids[i] == item_id)
+        {
+          position = i;
+        }
+      }
       values[position] = value;
       bools[position] = bool;
       names[position] = name;
       ids[position] = unique_id;
+      item_ids[position] = item_id;
       updates['/rooms/' + current_id + '/accessories/'] = accessories;
       break;
     case 'miscellaneous':
+      var position = 0;
+      if (miscellaneous[0][0] != "")
+      {
+        var position = miscellaneous[0].length;
+      }
+      var position = miscellaneous[0].length;
       var values = miscellaneous[0];
       var bools = miscellaneous[1];
       var names = miscellaneous[2];
       var ids = miscellaneous[3];
+      var item_ids = miscellaneous[4];
+      for (var i = 0; i < item_ids.length; i++)
+      {
+        if (item_ids[i] == item_id)
+        {
+          position = i;
+        }
+      }
       values[position] = value;
       bools[position] = bool;
       names[position] = name;
       ids[position] = unique_id;
+      item_ids[position] = item_id;
       updates['/rooms/' + current_id + '/miscellaneous/'] = miscellaneous;
       break;
     default:
@@ -655,6 +735,7 @@ function save_top(type, index_input, index_check)
   {
     check = index_check;
   }
+  var item_id = "" + Math.random().toString(36).slice(-8);
 
   if (input.value != "")
   {
@@ -687,18 +768,19 @@ function save_top(type, index_input, index_check)
     }
     box.removeChild(input);
     box.insertBefore(new_div, check);
-    save_firebase(type, firebase_value, "false", "", 0);
+    save_firebase(type, firebase_value, "false", "", item_id);
 
     check.src = "../Images/select.png";
     check.onclick = function()
     {
-      check_helper(check, new_div, 0, type);
-      save_firebase(type, firebase_value, "true", name, 0);
+      check_helper(check, new_div, item_id, type);
+      save_firebase(type, firebase_value, "true", name, item_id);
     }
   }
 
   minus.onclick = function()
   {
+    remove_firebase(type, item_id);
     var new_input = document.createElement("INPUT");
     new_input.className += " box_input";
     new_input.className += " slide_element";
@@ -735,12 +817,13 @@ function save_top(type, index_input, index_check)
     check.onclick = function()
     {
       save_top(type, new_input, check);
-      save_firebase(type, "", "false", "", 0);
+      //var new_item_id = "" + Math.random().toString(36).slice(-8);
+      //save_firebase(type, "", "false", "", item_id);
     }
   }
 }
 
-function add_from_load(type, value, bool, id, item_name, num, box)
+function add_from_load(type, value, bool, id, item_name, num, idx, box)
 {
   var new_minus = document.createElement("IMG");
   new_minus.src = "../Images/minus.png";
@@ -829,7 +912,7 @@ function add_from_load(type, value, bool, id, item_name, num, box)
   box.appendChild(new_div);
   box.appendChild(new_check);
 
-  if (num == 0)
+  if (idx == 0)
   {
     var new_plus = document.createElement("IMG");
     new_plus.src = "../Images/plus.png";
@@ -839,7 +922,7 @@ function add_from_load(type, value, bool, id, item_name, num, box)
     new_plus.className += str;
     new_plus.onclick = function()
     {
-      add(type, num);
+      add(type, idx);
     }
     box.appendChild(new_plus);
   }
@@ -848,7 +931,8 @@ function add_from_load(type, value, bool, id, item_name, num, box)
 
   new_minus.onclick = function()
   {
-    if (num == 0)
+    remove_firebase(type, num);
+    if (idx == 0)
     {
       var new_elem = document.createElement("INPUT");
       new_elem.className += " box_input"
@@ -869,8 +953,9 @@ function add_from_load(type, value, bool, id, item_name, num, box)
         if (new_elem.value != "")
         {
           var firebase_value = new_elem.value;
+          // TODO:
           save_top('lifestyle', new_elem, new_check);
-          save_firebase(type, firebase_value, "false", "", 0);
+          //save_firebase(type, firebase_value, "false", "", 0);
         }
       }
     }
@@ -901,7 +986,7 @@ function add_from_load(type, value, bool, id, item_name, num, box)
       {
         var firebase_value = new_elem.value;
         save_top('lifestyle', new_elem, new_check);
-        save_firebase(type, firebase_value, "false", "", 0);
+        //save_firebase(type, firebase_value, "false", "", 0);
       }
     }
   }
@@ -963,7 +1048,7 @@ function populate_boxes(arr, type)
 
   for (var i = 0; i < values.length; i++)
   {
-    add_from_load(type, values[i], bools[i], unique_ids[i], name[i], i, box);
+    add_from_load(type, values[i], bools[i], unique_ids[i], name[i], item_ids[i], i, box);
   }
   header.className += " hover_transparent";
   header.onclick = function()
