@@ -11,7 +11,7 @@
 /******************************************************************************/
 
 var current_id;
-var name;
+var name = "Guest";
 var unique_id;
 
 var lifestyle; //= new Array();
@@ -262,6 +262,7 @@ function add(type)
 
       new_check.src = "../Images/select.png";
       to_remove = new_div;
+      save_firebase(type, new_input.value, "false", name)
 
       new_check.onclick = function()
       {
@@ -274,7 +275,6 @@ function add(type)
   {
     remove_element(new_minus, to_remove, new_check, box, type);
   }
-
 }
 
 function check_helper(new_check, new_div)
@@ -367,6 +367,42 @@ function save_selected(select, input, type)
     default:
       break;
   }
+}
+
+
+function save_firebase(type, value, bool, name)
+{
+  var updates = {};
+
+  switch(type)
+  {
+    case 'lifestyle':
+      var values = lifestyle[0];
+      var bools = lifestyle[1];
+      var names = lifestyle[2];
+      var ids = lifestyle[3];
+      values[values.length] = value;
+      bools[bools.length] = bool;
+      names[names.length] = name;
+      ids[ids.length] = unique_id;
+      updates['/rooms/' + current_id + '/lifestyle/'] = lifestyle;
+      break;
+    case 'furniture':
+      updates['/rooms/' + current_id + '/furniture/'] = furniture;
+      break;
+    case 'bedroom':
+      updates['/rooms/' + current_id + '/bedroom/'] = bedroom;
+      break;
+    case 'accessories':
+      updates['/rooms/' + current_id + '/accessories/'] = accessories;
+      break;
+    case 'miscellaneous':
+      updates['/rooms/' + current_id + '/miscellaneous/'] = miscellaneous;
+      break;
+    default:
+      break;
+  }
+  return database.ref().update(updates);
 }
 
 function clear_top(type)
@@ -537,49 +573,6 @@ function save_top(type, index_input, index_check)
   }
 }
 
-function save_firebase(type, element, value)
-{
-  var arr;
-  var to_change_array;
-
-  switch(type)
-  {
-    case 'lifestyle':
-      arr = 'lifestyle_value';
-      to_change_array = lifestyle_value;
-      break;
-    case 'furniture':
-      arr = 'furniture_value';
-      to_change_array = furniture_value;
-      break;
-    case 'bedroom':
-      arr = 'bedroom_value';
-      to_change_array = bedroom_value;
-      break;
-    case 'accessories':
-      arr = 'accessories_value';
-      to_change_array = accessories_value;
-      break;
-    case 'miscellaneous':
-      arr = 'miscellaneous_value';
-      to_change_array = miscellaneous_value;
-      break;
-    default:
-      break;
-  }
-  var counter = 0;
-
-  while (box.firstChild != element)
-  {
-    counter++;
-  }
-
-  var updates = {};
-  to_change_array[counter] = value;
-  updates['/rooms/' + current_id + '/' + arr] = to_change_array;
-  database.ref().update(updates);
-}
-
 function add_from_load(type, value, bool, id, item_name, num, box)
 {
   var new_minus = document.createElement("IMG");
@@ -591,7 +584,6 @@ function add_from_load(type, value, bool, id, item_name, num, box)
   var new_div = document.createElement("DIV");
   new_div.className += " box_div";
   new_div.className += " slide_element";
-  new_div.innerHTML = value + " - " + item_name;
 
   var new_check = document.createElement("IMG");
   new_check.className += " input_checkbox";
@@ -636,6 +628,7 @@ function add_from_load(type, value, bool, id, item_name, num, box)
 
   if (bool == "true")
   {
+    new_div.innerHTML = value + " - " + item_name;
     if (id == unique_id)
     {
       new_check.src = "../Images/selected.png";
@@ -650,9 +643,11 @@ function add_from_load(type, value, bool, id, item_name, num, box)
       new_check.classList.remove("hover_transparent");
     }
     new_div.style.backgroundColor = "#5c7598";
+    new_div.style.fontWeight = "bolder";
   }
   else if (bool == "false")
   {
+    new_div.innerHTML = value;
     new_check.src = "../Images/select.png";
     new_div.style.backgroundColor = "#abb7c8";
     new_check.onclick = function()
@@ -693,8 +688,17 @@ function add_from_load(type, value, bool, id, item_name, num, box)
       new_elem.placeholder = "e.g. Microwave";
       new_elem.value = "";
       new_check.src = "../Images/check.png";
+      new_elem.style.display = "block";
       box.removeChild(new_div);
-      box.insertBefore(new_elem, new_div);
+      box.insertBefore(new_elem, new_check);
+      if (bool == "true" && id != unique_id)
+      {
+        new_check.className += " hover_transparent";
+      }
+      new_check.onclick = function()
+      {
+        save_top('lifestyle', new_elem, new_check);
+      }
     }
     else
     {
@@ -779,34 +783,33 @@ window.onload = function ()
   ind.innerHTML = "Room ID: " + room_id;
   current_id = room_id;
 
-  database.ref('rooms/' + room_id + '/lifestyle').on('value', function(snapshot)
+  database.ref('rooms/' + room_id + '/lifestyle').once('value').then(function(snapshot)
   {
     lifestyle = snapshot.val();
     populate_boxes(lifestyle, 'lifestyle');
   });
 
-  database.ref('rooms/' + room_id + '/furniture_value').on('value', function(snapshot)
+  database.ref('rooms/' + room_id + '/furniture').once('value').then(function(snapshot)
   {
     furniture = snapshot.val();
-    //  populate_boxes(furniture_value, furniture_bool, 'furniture');
-
+    populate_boxes(furniture, 'furniture');
   });
 
-  database.ref('rooms/' + room_id + '/bedroom_value').on('value', function(snapshot)
+  database.ref('rooms/' + room_id + '/bedroom').once('value').then(function(snapshot)
   {
     bedroom_value = snapshot.val();
-  //    populate_boxes(bedroom_value, bedroom_bool, 'bedroom');
+    populate_boxes(bedroom, 'bedroom');
   });
 
-  database.ref('rooms/' + room_id + '/accessories_value').on('value', function(snapshot)
+  database.ref('rooms/' + room_id + '/accessories').once('value').then(function(snapshot)
   {
     accessories_value = snapshot.val();
-//      populate_boxes(accessories_value, accessories_bool, 'accessories');
+    populate_boxes(accessories, 'accessories');
   });
 
-  database.ref('rooms/' + room_id + '/miscellaneous_value').on('value', function(snapshot)
+  database.ref('rooms/' + room_id + '/miscellaneous').once('value').then(function(snapshot)
   {
     miscellaneous_value = snapshot.val();
-  //    populate_boxes(miscellaneous_value, miscellaneous_bool, 'miscellaneous');
+    populate_boxes(miscellaneous, 'miscellaneous');
   });
 }

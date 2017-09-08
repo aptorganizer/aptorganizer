@@ -19,8 +19,14 @@ function create_new_room()
     return;
   }
   var unique_id = "" + Math.random().toString(36).slice(-8);
-  localStorage.setItem('name', name.value);
-  localStorage.setItem('unique_id', unique_id);
+  if (!localStorage.getItem('name'))
+  {
+    localStorage.setItem('name', name.value);
+  }
+  if (!localStorage.getItem('unique_id'))
+  {
+    localStorage.setItem('unique_id', unique_id);
+  }
   var updates = {};
   var d = new Date();
   var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -36,10 +42,10 @@ function create_new_room()
     room_id: random_id,
     signup_day: "" + month + "/" + date + "/" + year + " : " + day,
     lifestyle: [[""], [""], [""], [""]],
-    furniture: [""],
-    bedroom: [""],
-    accessories: [""],
-    miscellaneous: [""]
+    furniture: [[""], [""], [""], [""]],
+    bedroom: [[""], [""], [""], [""]],
+    accessories: [[""], [""], [""], [""]],
+    miscellaneous: [[""], [""], [""], [""]]
   });
   window.location.href = 'index.html' + '#' + random_id;
 }
@@ -63,8 +69,11 @@ function join_existing_room()
       const value = snapshot.val();
       if (value)
       {
-       window.location.href = "index.html" + '#' + input.value + '#' + name.value;
-       localStorage.setItem('name', name.value);
+       window.location.href = "index.html" + '#' + input.value;
+       if (!localStorage.setItem('name'))
+       {
+         localStorage.setItem('name', name.value);
+       }
       }
     });
   }
