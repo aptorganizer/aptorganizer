@@ -12,25 +12,19 @@
 
 var current_id;
 var name;
+var unique_id;
 
-var lifestyle_value; //= new Array();
-var furniture_value;// = new Array();
-var bedroom_value; //= new Array();
-var accessories_value; //= new Array();
-var miscellaneous_value; //= new Array();
-
-var lifestyle_bool;
-var furniture_bool;
-var bedroom_bool;
-var accessories_bool;
-var miscellaneous_bool;
+var lifestyle; //= new Array();
+var furniture;// = new Array();
+var bedroom; //= new Array();
+var accessories; //= new Array();
+var miscellaneous; //= new Array();
 
 function index_expand(type)
 {
   switch(type)
   {
-    case 'Lifestyle':
-
+    case 'lifestyle':
       $(".slide_element_lifestyle" ).slideDown(500).css('overflow', 'visible');
       var dropdown_button = document.getElementById('index_lifestyle_dropdown');
       dropdown_button.onclick = function()
@@ -42,7 +36,7 @@ function index_expand(type)
         }
       }
       break;
-    case 'Furniture':
+    case 'furniture':
       $( ".slide_element_furniture" ).slideDown(500).css('overflow', 'visible');
       var dropdown_button = document.getElementById('index_furniture_dropdown');
       dropdown_button.onclick = function()
@@ -54,7 +48,7 @@ function index_expand(type)
         }
       }
       break;
-    case 'Bedroom':
+    case 'bedroom':
       $( ".slide_element_bedroom" ).slideDown(500).css('overflow', 'visible');
       var dropdown_button = document.getElementById('index_bedroom_dropdown');
       dropdown_button.onclick = function()
@@ -66,7 +60,7 @@ function index_expand(type)
         }
       }
       break;
-    case 'Accessories':
+    case 'accessories':
       $( ".slide_element_accessories" ).slideDown(500).css('overflow', 'visible');
       var dropdown_button = document.getElementById('index_accessories_dropdown');
       dropdown_button.onclick = function()
@@ -78,7 +72,7 @@ function index_expand(type)
         }
       }
       break;
-    case 'Miscellaneous':
+    case 'miscellaneous':
       $( ".slide_element_miscellaneous" ).slideDown(500).css('overflow', 'visible');
       var dropdown_button = document.getElementById('index_miscellaneous_dropdown');
       dropdown_button.onclick = function()
@@ -157,6 +151,7 @@ function show_input()
         const value = snapshot.val();
         if (value)
         {
+         console.log("here");
          window.location.href = "index.html" + '#' + input.value;
          location.reload();
         }
@@ -253,6 +248,7 @@ function add(type)
   {
     if (new_input.value != "")
     {
+      console.log("here");
       var new_div = document.createElement("DIV");
       new_div.className += " box_div";
       new_div.className += " slide_element";
@@ -262,7 +258,7 @@ function add(type)
       box.removeChild(new_input);
       box.insertBefore(new_div, new_check);
 
-      save_firebase(type, new_div, new_div.innerHTML);
+      //save_firebase(type, new_div, new_div.innerHTML);
 
       new_check.src = "../Images/select.png";
       to_remove = new_div;
@@ -297,6 +293,26 @@ function check_helper(new_check, new_div)
     new_check.onclick = function()
     {
       check_helper(new_check, new_div, new_div.innerHTML);
+    }
+  }
+}
+
+function check_helper_selected(new_check, new_div)
+{
+  new_check.src = "../Images/select.png";
+  new_div.style.backgroundColor = "#abb7c8";
+  new_div.style.fontWeight = "normal";
+  new_div.innerHTML= new_div.innerHTML.substring(0, new_div.innerHTML.length - name.length - 3);
+
+  new_check.onclick = function()
+  {
+    new_check.src = "../Images/selected.png";
+    new_div.style.backgroundColor = "#5c7598";
+    new_div.style.fontWeight = "bolder";
+    new_div.innerHTML = new_div.innerHTML + " - " + name;
+    new_check.onclick = function()
+    {
+      check_helper_selected(new_check, new_div, new_div.innerHTML);
     }
   }
 }
@@ -470,7 +486,7 @@ function save_top(type, index_input, index_check)
     box.removeChild(input);
     box.insertBefore(new_div, check);
 
-    save_firebase(type, new_div);
+    //save_firebase(type, new_div);
 
     check.src = "../Images/select.png";
     check.onclick = function()
@@ -563,24 +579,19 @@ function save_firebase(type, element, value)
   updates['/rooms/' + current_id + '/' + arr] = to_change_array;
   database.ref().update(updates);
 }
-/////
 
-
-function add_from_load(type, value, bool, num, box)
+function add_from_load(type, value, bool, id, item_name, num, box)
 {
-
   var new_minus = document.createElement("IMG");
   new_minus.src = "../Images/minus.png";
   new_minus.className += " slide_element";
   new_minus.className += " minus_button";
   new_minus.className += " hover_transparent";
 
-  var new_div;
-
-  new_div = document.createElement("DIV");
+  var new_div = document.createElement("DIV");
   new_div.className += " box_div";
   new_div.className += " slide_element";
-  new_div.innerHTML = value;
+  new_div.innerHTML = value + " - " + item_name;
 
   var new_check = document.createElement("IMG");
   new_check.className += " input_checkbox";
@@ -625,137 +636,177 @@ function add_from_load(type, value, bool, num, box)
 
   if (bool == "true")
   {
-    new_check.src = "../Images/selected.png";
+    if (id == unique_id)
+    {
+      new_check.src = "../Images/selected.png";
+      new_check.onclick = function()
+      {
+        check_helper_selected(new_check, new_div);
+      }
+    }
+    else
+    {
+      new_check.src = "../Images/selected_other.png";
+      new_check.classList.remove("hover_transparent");
+    }
     new_div.style.backgroundColor = "#5c7598";
   }
-  else
+  else if (bool == "false")
   {
     new_check.src = "../Images/select.png";
     new_div.style.backgroundColor = "#abb7c8";
+    new_check.onclick = function()
+    {
+      check_helper(new_check, new_div);
+    }
   }
 
   box.appendChild(new_minus);
   box.appendChild(new_div);
   box.appendChild(new_check);
 
-  var to_remove = new_div;
-
-
-    new_check.onclick = function()
+  if (num == 0)
+  {
+    var new_plus = document.createElement("IMG");
+    new_plus.src = "../Images/plus.png";
+    new_plus.className += " slide_element";
+    new_plus.className += " plus_button";
+    new_plus.className += " hover_transparent";
+    new_plus.className += str;
+    new_plus.onclick = function()
     {
-      check_helper(new_check, new_div);
+      add(type);
     }
+    box.appendChild(new_plus);
+  }
 
+  var to_remove = new_div;
 
   new_minus.onclick = function()
   {
-    remove_element(new_minus, to_remove, new_check, box, type);
+    if (num == 0)
+    {
+      var new_elem = document.createElement("INPUT");
+      new_elem.className += " box_input"
+      new_elem.className += " slide_element";
+      new_elem.className += " slide_element_lifestyle";
+      new_elem.placeholder = "e.g. Microwave";
+      new_elem.value = "";
+      new_check.src = "../Images/check.png";
+      box.removeChild(new_div);
+      box.insertBefore(new_elem, new_div);
+    }
+    else
+    {
+      remove_element(new_minus, to_remove, new_check, box, type);
+    }
   }
+
+  return;
 }
 
-////
-
-function populate_boxes(values, bools, type)
+function populate_boxes(arr, type)
 {
   var box;
+  var header;
+
+  var values = arr[0];
+  var bools = arr[1];
+  var name = arr[2];
+  var unique_ids = arr[3];
 
   switch(type)
   {
     case 'lifestyle':
       box = document.getElementById('index_lifestyle_box')
+      header = document.getElementById('index_lifestyle_dropdown');
       break;
     case 'furniture':
       box = document.getElementById('index_furniture_box');
+      header = document.getElementById('index_furniture_dropdown');
       break;
     case 'bedroom':
       box = document.getElementById('index_bedroom_box');
+      header = document.getElementById('index_bedroom_dropdown');
       break;
     case 'accessories':
       box = document.getElementById('index_accessories_box');
+      header = document.getElementById('index_accessories_dropdown');
       break;
     case 'miscellaneous':
       box = document.getElementById('index_miscellaneous_box');
+      header = document.getElementById('index_miscellaneous_dropdown');
       break;
     default:
       break;
   }
   if (values[0] == "" || bools[0] == "")
   {
-    while(box.firstChild.firstChild)
+    header.className += " hover_transparent";
+    header.onclick = function()
     {
-      box.removeChild(box.firstChild());
+      index_expand(type);
     }
     return;
   }
-  else
+  while (box.hasChildNodes())
   {
-    while (box.firstChild) {
-      box.removeChild(box.firstChild);
-    }
-    box.style.height = "31px";
+    box.removeChild(box.lastChild);
   }
+
+  box.style.height = "31px";
+
   for (var i = 0; i < values.length; i++)
   {
-    add_from_load(type, values[i], bools[i], i, box);
+    add_from_load(type, values[i], bools[i], unique_ids[i], name[i], i, box);
   }
+  header.className += " hover_transparent";
+  header.onclick = function()
+  {
+    index_expand(type);
+  }
+  return;
 }
 
 window.onload = function ()
 {
   var ind = document.getElementById('index_password_title');
-  var room_id = window.location.hash.substring(1, 9);
-  name = window.location.hash.substring(10);
+  var room_id = window.location.hash.substring(1, 11);
+  name = localStorage.getItem('name');
+  unique_id = localStorage.getItem('unique_id');
+  console.log(unique_id);
+
   ind.innerHTML = "Room ID: " + room_id;
   current_id = room_id;
 
-  database.ref('rooms/' + room_id + '/lifestyle_value').on('value', function(snapshot)
+  database.ref('rooms/' + room_id + '/lifestyle').on('value', function(snapshot)
   {
-    lifestyle_value = snapshot.val();
-    database.ref('rooms/' + room_id + '/lifestyle_bool').on('value', function(snapshot)
-    {
-      lifestyle_bool = snapshot.val();
-      populate_boxes(lifestyle_value, lifestyle_bool, 'lifestyle');
-    });
+    lifestyle = snapshot.val();
+    populate_boxes(lifestyle, 'lifestyle');
   });
 
   database.ref('rooms/' + room_id + '/furniture_value').on('value', function(snapshot)
   {
-    furniture_value = snapshot.val();
-    database.ref('rooms/' + room_id + '/furniture_bool').on('value', function(snapshot)
-    {
-      furniture_bool = snapshot.val();
+    furniture = snapshot.val();
     //  populate_boxes(furniture_value, furniture_bool, 'furniture');
-    });
+
   });
 
   database.ref('rooms/' + room_id + '/bedroom_value').on('value', function(snapshot)
   {
     bedroom_value = snapshot.val();
-    database.ref('rooms/' + room_id + '/bedroom_bool').on('value', function(snapshot)
-    {
-      bedroom_bool = snapshot.val();
   //    populate_boxes(bedroom_value, bedroom_bool, 'bedroom');
-    });
   });
 
   database.ref('rooms/' + room_id + '/accessories_value').on('value', function(snapshot)
   {
     accessories_value = snapshot.val();
-    database.ref('rooms/' + room_id + '/accessories_bool').on('value', function(snapshot)
-    {
-      accessories_bool = snapshot.val();
 //      populate_boxes(accessories_value, accessories_bool, 'accessories');
-    });
   });
 
   database.ref('rooms/' + room_id + '/miscellaneous_value').on('value', function(snapshot)
   {
     miscellaneous_value = snapshot.val();
-    database.ref('rooms/' + room_id + '/miscellaneous_bool').on('value', function(snapshot)
-    {
-      miscellaneous_bool = snapshot.val();
   //    populate_boxes(miscellaneous_value, miscellaneous_bool, 'miscellaneous');
-    });
   });
-
 }

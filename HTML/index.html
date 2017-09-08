@@ -19,7 +19,8 @@
         Join Existing Room
       </center>
     </div>
-    <input id="index_join_existing_room" class="title_input" maxlength="8" type="text" placeholder="Room ID"></input>
+
+    <input id="index_join_existing_room" class="title_input" maxlength="10" type="text" placeholder="Room ID"></input>
 
     <div class="clearfix"/>
 
@@ -36,7 +37,8 @@
 
     <div class="clearfix"/>
 
-    <h2 id="index_lifestyle_dropdown" onclick="index_expand('Lifestyle')" class="hover_transparent">
+    <h2 id="index_lifestyle_dropdown">
+    <!--<h2 id="index_lifestyle_dropdown" onclick="index_expand('lifestyle')" class="hover_transparent">-->
       Lifestyle
       <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
     </h2>
@@ -48,7 +50,7 @@
       <img onclick="add('lifestyle')" src="../Images/plus.png" class="slide_element slide_element_lifestyle plus_button hover_transparent"></img>
     </div>
 
-    <h2 id="index_furniture_dropdown" onclick="index_expand('Furniture')" class="hover_transparent">
+    <h2 id="index_furniture_dropdown" onclick="index_expand('furniture')" class="hover_transparent">
       Furniture
       <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
     </h2>
@@ -60,7 +62,7 @@
       <img onclick="add('furniture')" src="../Images/plus.png" class="slide_element slide_element_furniture plus_button hover_transparent"></img>
     </div>
 
-    <h2 id="index_bedroom_dropdown" onclick="index_expand('Bedroom')" class="hover_transparent">
+    <h2 id="index_bedroom_dropdown" onclick="index_expand('bedroom')" class="hover_transparent">
       Bedroom
       <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
     </h2>
@@ -72,7 +74,7 @@
       <img onclick="add('bedroom')" src="../Images/plus.png" class="slide_element slide_element_bedroom plus_button hover_transparent"></img>
     </div>
 
-    <h2 id="index_accessories_dropdown" onclick="index_expand('Accessories')" class="hover_transparent">
+    <h2 id="index_accessories_dropdown" onclick="index_expand('accessories')" class="hover_transparent">
       Accessories
       <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
     </h2>
@@ -85,7 +87,7 @@
 
     </div>
 
-    <h2 id="index_miscellaneous_dropdown" onclick="index_expand('Miscellaneous')" class="hover_transparent">
+    <h2 id="index_miscellaneous_dropdown" onclick="index_expand('miscellaneous')" class="hover_transparent">
       Miscellaneous
       <img class="index_dropdown_arrow" src="../Images/dropdown.png"></img>
     </h2>
@@ -145,7 +147,6 @@
       var database = firebase.database();
     </script>
     <script src = "../JavaScript/index.js"></script>
-    <script src = "../JavaScript/title.js"></script>
   </body>
 
 </html>
