@@ -687,6 +687,7 @@ function save_top(type, index_input, index_check)
     }
     box.removeChild(input);
     box.insertBefore(new_div, check);
+    save_firebase(type, firebase_value, "false", "", 0);
 
     check.src = "../Images/select.png";
     check.onclick = function()
@@ -731,7 +732,6 @@ function save_top(type, index_input, index_check)
     box.removeChild(new_div);
     box.insertBefore(new_input, check);
     check.src = "../Images/check.png";
-    remove_firebase(type, 0);
     check.onclick = function()
     {
       save_top(type, new_input, check);
