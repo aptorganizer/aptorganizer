@@ -247,15 +247,37 @@ function add(type, num)
       new_div.style.display = "block";
       new_div.className += " slide_element_lifestyle";
       new_div.innerHTML = new_input.value;
+      var firebase_value = new_input.value;
       box.removeChild(new_input);
       box.insertBefore(new_div, new_check);
       new_check.src = "../Images/select.png";
       to_remove = new_div;
-      save_firebase(type, new_div.innerHTML, "false", "");
+      var len = 0;
+      switch(type)
+      {
+        case 'lifestyle':
+          len = lifestyle[0].length;
+          break;
+        case 'furniture':
+          len = furniture[0].length;
+          break;
+        case 'bedroom':
+          len = bedroom[0].length;
+          break;
+        case 'accessories':
+          len = accessories[0].length;
+          break;
+        case 'miscellaneous':
+          len = miscellaneous[0].length;
+          break;
+        default:
+          break;
+      }
+      save_firebase(type, firebase_value, "false", "", len);
       new_check.onclick = function()
       {
         check_helper(new_check, new_div, type);
-        save_firebase(type, new_div.innerHTML, "true", name);
+        save_firebase(type, firebase_value, "true", name, len);
       }
     }
   }
@@ -279,12 +301,13 @@ function check_helper(new_check, new_div, num, type)
     new_div.style.backgroundColor = "#abb7c8";
     new_div.innerHTML= new_div.innerHTML.substring(0, new_div.innerHTML.length - name.length - 3);
     new_div.style.fontWeight = "normal";
-    save_firebase(type, new_div.innerHTML, "false", "", num);
+    var firebase_value = new_div.innerHTML;
+    save_firebase(type, firebase_value, "false", "", num);
 
     new_check.onclick = function()
     {
       check_helper(new_check, new_div, num, type);
-      save_firebase(type, new_div.innerHTML, "true", name, num);
+      save_firebase(type, firebase_value, "true", name, num);
     }
   }
 }
@@ -464,16 +487,16 @@ function save_firebase(type, value, bool, name, num)
     switch (type)
     {
       case 'lifestyle':
-        position = lifestyle.length;
+        position = lifestyle[0].length;
         break;
       case 'furniture':
-        position = furniture.length;
+        position = furniture[0].length;
       case 'bedroom':
-        position = bedroom.length;
+        position = bedroom[0].length;
       case 'accessories':
-        position = accessories.length;
+        position = accessories[0].length;
       case 'miscellaneous':
-        position = miscellaneous.length;
+        position = miscellaneous[0].length;
       default:
         break;
     }
@@ -640,6 +663,7 @@ function save_top(type, index_input, index_check)
     new_div.className += " slide_element";
     new_div.style.display = "block";
     new_div.innerHTML = input.value;
+    var firebase_value = input.value;
 
     switch(type)
     {
@@ -668,7 +692,7 @@ function save_top(type, index_input, index_check)
     check.onclick = function()
     {
       check_helper(check, new_div, 0, type);
-      save_firebase(type, new_div.innerHTML, "true", name, 0);
+      save_firebase(type, firebase_value, "true", name, 0);
     }
   }
 
@@ -844,8 +868,9 @@ function add_from_load(type, value, bool, id, item_name, num, box)
       {
         if (new_elem.value != "")
         {
+          var firebase_value = new_elem.value;
           save_top('lifestyle', new_elem, new_check);
-          save_firebase(type, new_elem.value, "false", "", 0);
+          save_firebase(type, firebase_value, "false", "", 0);
         }
       }
     }
@@ -874,8 +899,9 @@ function add_from_load(type, value, bool, id, item_name, num, box)
     {
       if (new_elem.value != "")
       {
+        var firebase_value = new_elem.value;
         save_top('lifestyle', new_elem, new_check);
-        save_firebase(type, new_elem.value, "false", "", 0);
+        save_firebase(type, firebase_value, "false", "", 0);
       }
     }
   }
@@ -892,6 +918,7 @@ function populate_boxes(arr, type)
   var bools = arr[1];
   var name = arr[2];
   var unique_ids = arr[3];
+  var item_ids = arr[4];
 
   switch(type)
   {

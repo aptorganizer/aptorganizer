@@ -41,11 +41,11 @@ function create_new_room()
   firebase.database().ref('rooms/' + random_id).set({
     room_id: random_id,
     signup_day: "" + month + "/" + date + "/" + year + " : " + day,
-    lifestyle: [[""], [""], [""], [""]],
-    furniture: [[""], [""], [""], [""]],
-    bedroom: [[""], [""], [""], [""]],
-    accessories: [[""], [""], [""], [""]],
-    miscellaneous: [[""], [""], [""], [""]]
+    lifestyle: [[""], [""], [""], [""], [""]],
+    furniture: [[""], [""], [""], [""], [""]],
+    bedroom: [[""], [""], [""], [""], [""]],
+    accessories: [[""], [""], [""], [""], [""]],
+    miscellaneous: [[""], [""], [""], [""], [""]]
   });
   window.location.href = 'index.html' + '#' + random_id;
 }
