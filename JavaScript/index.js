@@ -70,9 +70,14 @@ function join_existing_room()
       if (value)
       {
        window.location.href = "HTML/room.html" + '#' + input.value;
-       if (!localStorage.setItem('name'))
+       var unique_id = "" + Math.random().toString(36).slice(-8);
+       if (!localStorage.getItem('name'))
        {
          localStorage.setItem('name', name.value);
+       }
+       if (!localStorage.getItem('unique_id'))
+       {
+         localStorage.setItem('unique_id', unique_id);
        }
       }
     });
