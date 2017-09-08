@@ -251,7 +251,7 @@ function add(type, num)
       box.insertBefore(new_div, new_check);
       new_check.src = "../Images/select.png";
       to_remove = new_div;
-      save_firebase(type, new_div.innerHTML, "false", name);
+      save_firebase(type, new_div.innerHTML, "false", "");
       new_check.onclick = function()
       {
         check_helper(new_check, new_div, type);
@@ -279,7 +279,7 @@ function check_helper(new_check, new_div, num, type)
     new_div.style.backgroundColor = "#abb7c8";
     new_div.innerHTML= new_div.innerHTML.substring(0, new_div.innerHTML.length - name.length - 3);
     new_div.style.fontWeight = "normal";
-    save_firebase(type, new_div.innerHTML, "false", name, num);
+    save_firebase(type, new_div.innerHTML, "false", "", num);
 
     new_check.onclick = function()
     {
@@ -309,7 +309,7 @@ function check_helper_selected(new_check, new_div, num, type)
     new_check.onclick = function()
     {
       check_helper_selected(new_check, new_div, num, type);
-      save_firebase(type, new_value, "false", name, num);
+      save_firebase(type, new_value, "false", "", num);
     }
   }
 }
@@ -459,12 +459,28 @@ function save_firebase(type, value, bool, name, num)
 {
   var updates = {};
   var position = 0;
-  if (!num)
+  if (!num && num != 0)
   {
-    position = values.length;
+    switch (type)
+    {
+      case 'lifestyle':
+        position = lifestyle.length;
+        break;
+      case 'furniture':
+        position = furniture.length;
+      case 'bedroom':
+        position = bedroom.length;
+      case 'accessories':
+        position = accessories.length;
+      case 'miscellaneous':
+        position = miscellaneous.length;
+      default:
+        break;
+    }
   }
   else
   {
+    console.log("here");
       position = num;
   }
 
@@ -762,7 +778,7 @@ function add_from_load(type, value, bool, id, item_name, num, box)
       new_check.onclick = function()
       {
         check_helper_selected(new_check, new_div, num, type);
-        save_firebase(type, value, "false", name, num);
+        save_firebase(type, value, "false", "", num);
       }
     }
     else
@@ -784,7 +800,6 @@ function add_from_load(type, value, bool, id, item_name, num, box)
       save_firebase(type, value, "true", name, num);
     }
   }
-
 
   box.appendChild(new_minus);
   box.appendChild(new_div);
@@ -830,7 +845,7 @@ function add_from_load(type, value, bool, id, item_name, num, box)
         if (new_elem.value != "")
         {
           save_top('lifestyle', new_elem, new_check);
-          save_firebase(type, new_elem.value, "false", name, num);
+          save_firebase(type, new_elem.value, "false", "", 0);
         }
       }
     }
@@ -860,7 +875,7 @@ function add_from_load(type, value, bool, id, item_name, num, box)
       if (new_elem.value != "")
       {
         save_top('lifestyle', new_elem, new_check);
-        save_firebase(type, new_elem.value, "false", name, num);
+        save_firebase(type, new_elem.value, "false", "", 0);
       }
     }
   }
