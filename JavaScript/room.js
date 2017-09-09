@@ -598,7 +598,6 @@ function save_firebase(type, value, bool, name, item_id)
       {
         var position = accessories[0].length;
       }
-      var position = accessories[0].length;
       var values = accessories[0];
       var bools = accessories[1];
       var names = accessories[2];
@@ -624,7 +623,6 @@ function save_firebase(type, value, bool, name, item_id)
       {
         var position = miscellaneous[0].length;
       }
-      var position = miscellaneous[0].length;
       var values = miscellaneous[0];
       var bools = miscellaneous[1];
       var names = miscellaneous[2];
